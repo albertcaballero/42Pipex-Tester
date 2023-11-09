@@ -308,11 +308,11 @@ testnbr=$(($testnbr + 1))
 
 printf "\n$BLUE====TEST $testnbr ==============$YELLOW(cmd2 permission denied)\n$NC"
 printf "$PURPLE\nShell Output (Errors):\n$PINK\t\t-Pipex Output Error:\n$NC"
-cp pipex pipex2
+cp ../pipex pipex2
 chmod a-x pipex2
-p_code=$(../pipex "infile.txt" "cat" "../pipex2" "pipexout.txt"; echo $?)
+p_code=$(../pipex "infile.txt" "cat" "./pipex2" "pipexout.txt"; echo $?)
 printf "$PINK\t\t-Real Output Error:\n$NC"
-r_code=$(<infile.txt cat | ../pipex2 > bashout.txt; echo $?)
+r_code=$(<infile.txt cat | ./pipex2 > bashout.txt; echo $?)
 diffwc=$(diff pipexout.txt bashout.txt | wc -l)
 if [ $diffwc -eq 0 ]
 	then
