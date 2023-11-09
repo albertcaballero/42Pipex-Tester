@@ -334,8 +334,8 @@ if [ $r_code -eq $p_code ]
 fi
 
 rm bashout.txt pipex2 pipexout.txt
-printf "$GREEN\n $goodcode/$testnbr of tests exited with the correct code ✨\n"
-printf "$GREEN $gooddiff/$testnbr of tests had the correct output file ✨\n"
+printf "$GREEN\n\t✨$goodcode/$testnbr of tests exited with the correct code ✨\n"
+printf "$GREEN\t✨$gooddiff/$testnbr of tests had the correct output file ✨\n"
 
 printf "$NC\n\n🔳🔲🔳🔲🔳🔲🔳🔲🔳🔲🔳🔲🔳🔲🔳🔲🔳🔲🔳🔲🔳🔲🔳🔲🔳🔲🔳🔲🔳🔲🔳🔲\n"
 printf "\n\t$GREEN 🌟========TESTS COMPLETED, GOOD LUCK!========🌟\n$NC"
