@@ -15,8 +15,10 @@ printf "\n🔳🔲🔳🔲🔳🔲🔳🔲🔳🔲🔳🔲🔳🔲🔳🔲🔳�
 
 r_code=0
 p_code=0
+errmsg=0
 goodcode=0
 gooddiff=0
+gooderr=0
 diffwc=0
 
 touch bashout.txt
@@ -49,6 +51,7 @@ testnbr=$(($testnbr + 1))
 printf "\n$BLUE====TEST $testnbr ==============$YELLOW(nonexistent infile)\n$NC"
 printf "$PURPLE\nShell Output (Errors):\n$PINK\t\t-Pipex Output Error:\n$NC"
 p_code=$(../pipex "jfkasdjfkas" "ls" "cat" "pipexout.txt"; echo $?)
+#errmsg=$(../pipex "jfkasdjfkas" "ls" "cat" "pipexout.txt" | grep "no such file" | wc -l)
 printf "$PINK\t\t-Real Output Error:\n$NC"
 r_code=$(<jfkasdjfkas ls | cat > bashout.txt; echo $?)
 diffwc=$(diff pipexout.txt bashout.txt | wc -l)
@@ -334,8 +337,26 @@ if [ $r_code -eq $p_code ]
 fi
 
 rm bashout.txt pipex2 pipexout.txt
-printf "$GREEN\n\t✨$goodcode/$testnbr of tests exited with the correct code ✨\n"
-printf "$GREEN\t✨$gooddiff/$testnbr of tests had the correct output file ✨\n"
+if [ $goodcode -eq $testnbr ]
+	then
+		printf "$GREEN"
+elif [ $goodcode -gt $(($testnbr - 3)) ]
+	then
+		printf "$YELLOW"
+	else
+		printf "$RED"
+fi
+printf "\n\t✨ $goodcode/$testnbr of tests exited with the correct code ✨\n"
+if [ $gooddiff -eq $testnbr ]
+	then
+		printf "$GREEN"
+elif [ $gooddiff -gt $(($testnbr - 3)) ]
+	then
+		printf "$YELLOW"
+	else
+		printf "$RED"
+fi
+printf "\t✨ $gooddiff/$testnbr of tests had the correct output file ✨\n"
 
 printf "$NC\n\n🔳🔲🔳🔲🔳🔲🔳🔲🔳🔲🔳🔲🔳🔲🔳🔲🔳🔲🔳🔲🔳🔲🔳🔲🔳🔲🔳🔲🔳🔲🔳🔲\n"
 printf "\n\t$GREEN 🌟========TESTS COMPLETED, GOOD LUCK!========🌟\n$NC"
