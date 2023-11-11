@@ -23,7 +23,15 @@ diffwc=0
 
 touch bashout.txt
 printf "\n$BLUE====TEST $testnbr ==============$YELLOW(normal input)\n$NC"
-printf "$PURPLE\nShell Output (Errors):\n$PINK\t\t-Pipex Output Error:\n$NC"
+errmsg=$(../pipex "infile.txt" "ls" "cat" "pipexout.txt" 2> testerr.txt; cat testerr.txt | wc -l)
+if [ $errmsg -eq 0 ]
+	then
+		gooderr=$(($gooderr + 1))
+		printf "$GREEN\nShell Output (Errors): OK\n"
+	else
+		printf "$RED\nShell Output (Errors): KO\n"
+fi
+printf "$PINK\t\t-Pipex Output Error:\n$NC"
 p_code=$(../pipex "infile.txt" "ls" "cat" "pipexout.txt"; echo $?)
 printf "$PINK\t\t-Real Output Error:\n$NC"
 r_code=$(<infile.txt ls | cat > bashout.txt; echo $?)
@@ -49,9 +57,16 @@ fi
 testnbr=$(($testnbr + 1))
 
 printf "\n$BLUE====TEST $testnbr ==============$YELLOW(nonexistent infile)\n$NC"
-printf "$PURPLE\nShell Output (Errors):\n$PINK\t\t-Pipex Output Error:\n$NC"
+errmsg=$(../pipex "jfkasdjfkas" "ls" "cat" "pipexout.txt" 2> testerr.txt; cat testerr.txt | grep "no such file" | wc -l)
+if [ $errmsg -eq 1 ]
+	then
+		gooderr=$(($gooderr + 1))
+		printf "$GREEN\nShell Output (Errors): OK\n"
+	else
+		printf "$RED\nShell Output (Errors): KO\n"
+fi
+printf "$PINK\t\t-Pipex Output Error:\n$NC"
 p_code=$(../pipex "jfkasdjfkas" "ls" "cat" "pipexout.txt"; echo $?)
-#errmsg=$(../pipex "jfkasdjfkas" "ls" "cat" "pipexout.txt" | grep "no such file" | wc -l)
 printf "$PINK\t\t-Real Output Error:\n$NC"
 r_code=$(<jfkasdjfkas ls | cat > bashout.txt; echo $?)
 diffwc=$(diff pipexout.txt bashout.txt | wc -l)
@@ -76,7 +91,15 @@ fi
 testnbr=$(($testnbr + 1))
 
 printf "\n$BLUE====TEST $testnbr ==============$YELLOW(dev/random)\n$NC"
-printf "$PURPLE\nShell Output (Errors):\n$PINK\t\t-Pipex Output Error:\n$NC"
+errmsg=$(../pipex "/dev/random" "cat" "head -1" "pipexout.txt" 2> testerr.txt; cat testerr.txt | wc -l)
+if [ $errmsg -eq 0 ]
+	then
+		gooderr=$(($gooderr + 1))
+		printf "$GREEN\nShell Output (Errors): OK\n"
+	else
+		printf "$RED\nShell Output (Errors): KO\n"
+fi
+printf "$PINK\t\t-Pipex Output Error:\n$NC"
 p_code=$(../pipex "/dev/random" "cat" "head -1" "pipexout.txt"; echo $?)
 printf "$PINK\t\t-Real Output Error:\n$NC"
 r_code=$(</dev/random cat | head -1 > bashout.txt; echo $?)
@@ -96,7 +119,15 @@ fi
 testnbr=$(($testnbr + 1))
 
 printf "\n$BLUE====TEST $testnbr ==============$YELLOW(cat cat)\n$NC"
-printf "$PURPLE\nShell Output (Errors):\n$PINK\t\t-Pipex Output Error:\n$NC"
+errmsg=$(../pipex "infile.txt" "cat" "cat" "pipexout.txt"2> testerr.txt; cat testerr.txt | wc -l)
+if [ $errmsg -eq 0 ]
+	then
+		gooderr=$(($gooderr + 1))
+		printf "$GREEN\nShell Output (Errors): OK\n"
+	else
+		printf "$RED\nShell Output (Errors): KO\n"
+fi
+printf "$PINK\t\t-Pipex Output Error:\n$NC"
 p_code=$(../pipex "infile.txt" "cat" "cat" "pipexout.txt"; echo $?)
 printf "$PINK\t\t-Real Output Error:\n$NC"
 r_code=$(<infile.txt cat | cat > bashout.txt; echo $?)
@@ -122,7 +153,15 @@ fi
 testnbr=$(($testnbr + 1))
 
 printf "\n$BLUE====TEST $testnbr ==============$YELLOW(cmd 1 invalid, cmd 2 doesn't need input)\n$NC"
-printf "$PURPLE\nShell Output (Errors):\n$PINK\t\t-Pipex Output Error:\n$NC"
+errmsg=$(../pipex "infile.txt" "jfkdjfdkj" "ls" "pipexout.txt" 2> testerr.txt; cat testerr.txt | grep "command not found" | wc -l)
+if [ $errmsg -eq 1 ]
+	then
+		gooderr=$(($gooderr + 1))
+		printf "$GREEN\nShell Output (Errors): OK\n"
+	else
+		printf "$RED\nShell Output (Errors): KO\n"
+fi
+printf "$PINK\t\t-Pipex Output Error:\n$NC"
 p_code=$(../pipex "infile.txt" "jfkdjfdkj" "ls" "pipexout.txt"; echo $?)
 printf "$PINK\t\t-Real Output Error:\n$NC"
 r_code=$(<infile.txt jfkdjfdkj | ls > bashout.txt; echo $?)
@@ -148,7 +187,15 @@ fi
 testnbr=$(($testnbr + 1))
 
 printf "\n$BLUE====TEST $testnbr ==============$YELLOW(cmd 1 valid, cmd 2 invalid)\n$NC"
-printf "$PURPLE\nShell Output (Errors):\n$PINK\t\t-Pipex Output Error:\n$NC"
+errmsg=$(../pipex "infile.txt" "cat" "fjsdkalfjjds" "pipexout.txt" 2> testerr.txt; cat testerr.txt | grep "command not found" | wc -l)
+if [ $errmsg -eq 1 ]
+	then
+		gooderr=$(($gooderr + 1))
+		printf "$GREEN\nShell Output (Errors): OK\n"
+	else
+		printf "$RED\nShell Output (Errors): KO\n"
+fi
+printf "$PINK\t\t-Pipex Output Error:\n$NC"
 p_code=$(../pipex "infile.txt" "cat" "fjsdkalfjjds" "pipexout.txt"; echo $?)
 printf "$PINK\t\t-Real Output Error:\n$NC"
 r_code=$(<infile.txt cat | fjsdkalfjjds > bashout.txt; echo $?)
@@ -174,7 +221,15 @@ fi
 testnbr=$(($testnbr + 1))
 
 printf "\n$BLUE====TEST $testnbr ==============$YELLOW(cmd 1 invalid flags, cmd 2 doesn't need input)\n$NC"
-printf "$PURPLE\nShell Output (Errors):\n$PINK\t\t-Pipex Output Error:\n$NC"
+errmsg=$(../pipex "infile.txt" "cat -ghj747" "ls" "pipexout.txt" 2> testerr.txt; cat testerr.txt | grep "illegal option" | wc -l)
+if [ $errmsg -eq 1 ]
+	then
+		gooderr=$(($gooderr + 1))
+		printf "$GREEN\nShell Output (Errors): OK\n"
+	else
+		printf "$RED\nShell Output (Errors): KO\n"
+fi
+printf "$PINK\t\t-Pipex Output Error:\n$NC"
 p_code=$(../pipex "infile.txt" "cat -ghj747" "ls" "pipexout.txt"; echo $?)
 printf "$PINK\t\t-Real Output Error:\n$NC"
 r_code=$(<infile.txt cat -ghj747 | ls > bashout.txt; echo $?)
@@ -200,7 +255,15 @@ fi
 testnbr=$(($testnbr + 1))
 
 printf "\n$BLUE====TEST $testnbr ==============$YELLOW(cmd 1 valid, cmd 2 invalid flags)\n$NC"
-printf "$PURPLE\nShell Output (Errors):\n$PINK\t\t-Pipex Output Error:\n$NC"
+errmsg=$(../pipex "infile.txt" "cat" "cat -dfsa2332" "pipexout.txt" 2> testerr.txt; cat testerr.txt | grep "illegal option" | wc -l)
+if [ $errmsg -eq 1 ]
+	then
+		gooderr=$(($gooderr + 1))
+		printf "$GREEN\nShell Output (Errors): OK\n"
+	else
+		printf "$RED\nShell Output (Errors): KO\n"
+fi
+printf "$PINK\t\t-Pipex Output Error:\n$NC"
 p_code=$(../pipex "infile.txt" "cat" "cat -dfsa2332" "pipexout.txt"; echo $?)
 printf "$PINK\t\t-Real Output Error:\n$NC"
 r_code=$(<infile.txt cat | cat -dfsa2332 > bashout.txt; echo $?)
@@ -226,7 +289,15 @@ fi
 testnbr=$(($testnbr + 1))
 
 printf "\n$BLUE====TEST $testnbr ==============$YELLOW(absolute paths for cmds)\n$NC"
-printf "$PURPLE\nShell Output (Errors):\n$PINK\t\t-Pipex Output Error:\n$NC"
+errmsg=$(../pipex "infile.txt" "/bin/cat" "/bin/ls" "pipexout.txt" 2> testerr.txt; cat testerr.txt | wc -l)
+if [ $errmsg -eq 0 ]
+	then
+		gooderr=$(($gooderr + 1))
+		printf "$GREEN\nShell Output (Errors): OK\n"
+	else
+		printf "$RED\nShell Output (Errors): KO\n"
+fi
+printf "$PINK\t\t-Pipex Output Error:\n$NC"
 p_code=$(../pipex "infile.txt" "/bin/cat" "/bin/ls" "pipexout.txt"; echo $?)
 printf "$PINK\t\t-Real Output Error:\n$NC"
 r_code=$(<infile.txt /bin/cat | /bin/ls > bashout.txt; echo $?)
@@ -252,7 +323,15 @@ fi
 testnbr=$(($testnbr + 1))
 
 printf "\n$BLUE====TEST $testnbr ==============$YELLOW(permission denied infile)\n$NC"
-printf "$PURPLE\nShell Output (Errors):\n$PINK\t\t-Pipex Output Error:\n$NC"
+errmsg=$(../pipex "infile.txt" "cat" "cat" "pipexout.txt" 2> testerr.txt; cat testerr.txt | grep "Permission denied" | wc -l)
+if [ $errmsg -eq 1 ]
+	then
+		gooderr=$(($gooderr + 1))
+		printf "$GREEN\nShell Output (Errors): OK\n"
+	else
+		printf "$RED\nShell Output (Errors): KO\n"
+fi
+printf "$PINK\t\t-Pipex Output Error:\n$NC"
 chmod 000 infile.txt
 p_code=$(../pipex "infile.txt" "cat" "cat" "pipexout.txt"; echo $?)
 printf "$PINK\t\t-Real Output Error:\n$NC"
@@ -280,12 +359,20 @@ fi
 testnbr=$(($testnbr + 1))
 
 printf "\n$BLUE====TEST $testnbr ==============$YELLOW(permission denied outfile)\n$NC"
-printf "$PURPLE\nShell Output (Errors):\n$PINK\t\t-Pipex Output Error:\n$NC"
 chmod a-w pipexout.txt
 chmod a-w bashout.txt
-p_code=$(../pipex "infile.txt" "/bin/cat" "/bin/ls" "pipexout.txt"; echo $?)
+errmsg=$(../pipex "infile.txt" "cat" "ls" "pipexout.txt" 2> testerr.txt; cat testerr.txt | grep "Permission denied" | wc -l)
+if [ $errmsg -eq 1 ]
+	then
+		gooderr=$(($gooderr + 1))
+		printf "$GREEN\nShell Output (Errors): OK\n"
+	else
+		printf "$RED\nShell Output (Errors): KO\n"
+fi
+printf "$PINK\t\t-Pipex Output Error:\n$NC"
+p_code=$(../pipex "infile.txt" "cat" "ls" "pipexout.txt"; echo $?)
 printf "$PINK\t\t-Real Output Error:\n$NC"
-r_code=$(<infile.txt /bin/cat | /bin/ls > bashout.txt; echo $?)
+r_code=$(<infile.txt cat | ls > bashout.txt; echo $?)
 diffwc=$(diff pipexout.txt bashout.txt | wc -l)
 if [ $diffwc -eq 0 ]
 	then
@@ -310,9 +397,17 @@ fi
 testnbr=$(($testnbr + 1))
 
 printf "\n$BLUE====TEST $testnbr ==============$YELLOW(cmd2 permission denied)\n$NC"
-printf "$PURPLE\nShell Output (Errors):\n$PINK\t\t-Pipex Output Error:\n$NC"
 cp ../pipex pipex2
 chmod a-x pipex2
+errmsg=$(../pipex "infile.txt" "cat" "./pipex2" "pipexout.txt" 2> testerr.txt; cat testerr.txt | grep "Permission denied" | wc -l)
+if [ $errmsg -eq 1 ]
+	then
+		gooderr=$(($gooderr + 1))
+		printf "$GREEN\nShell Output (Errors): OK\n"
+	else
+		printf "$RED\nShell Output (Errors): KO\n"
+fi
+printf "$PINK\t\t-Pipex Output Error:\n$NC"
 p_code=$(../pipex "infile.txt" "cat" "./pipex2" "pipexout.txt"; echo $?)
 printf "$PINK\t\t-Real Output Error:\n$NC"
 r_code=$(<infile.txt cat | ./pipex2 > bashout.txt; echo $?)
@@ -336,7 +431,8 @@ if [ $r_code -eq $p_code ]
 		printf "$RED\nExit Codes KO$NC pipex: $p_code // real: $r_code\n"
 fi
 
-rm bashout.txt pipex2 pipexout.txt
+# ==========================RESULTS==========================================================#
+rm bashout.txt pipex2 pipexout.txt testerr.txt pipexout.txt2
 if [ $goodcode -eq $testnbr ]
 	then
 		printf "$GREEN"
@@ -347,6 +443,7 @@ elif [ $goodcode -gt $(($testnbr - 3)) ]
 		printf "$RED"
 fi
 printf "\n\t✨ $goodcode/$testnbr of tests exited with the correct code ✨\n"
+
 if [ $gooddiff -eq $testnbr ]
 	then
 		printf "$GREEN"
@@ -357,6 +454,17 @@ elif [ $gooddiff -gt $(($testnbr - 3)) ]
 		printf "$RED"
 fi
 printf "\t✨ $gooddiff/$testnbr of tests had the correct output file ✨\n"
+
+if [ $gooderr -eq $testnbr ]
+	then
+		printf "$GREEN"
+elif [ $gooderr -gt $(($testnbr - 3)) ]
+	then
+		printf "$YELLOW"
+	else
+		printf "$RED"
+fi
+printf "\t✨ $gooderr/$testnbr of tests sent the correct error message ✨\n"
 
 printf "$NC\n\n🔳🔲🔳🔲🔳🔲🔳🔲🔳🔲🔳🔲🔳🔲🔳🔲🔳🔲🔳🔲🔳🔲🔳🔲🔳🔲🔳🔲🔳🔲🔳🔲\n"
 printf "\n\t$GREEN 🌟========TESTS COMPLETED, GOOD LUCK!========🌟\n$NC"
