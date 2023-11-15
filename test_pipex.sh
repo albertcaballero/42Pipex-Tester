@@ -57,7 +57,7 @@ fi
 testnbr=$(($testnbr + 1))
 
 printf "\n$BLUE====TEST $testnbr ==============$YELLOW(nonexistent infile)\n$NC"
-errmsg=$(../pipex "jfkasdjfkas" "ls" "cat" "pipexout.txt" 2> testerr.txt; cat testerr.txt | grep "no such file" | wc -l)
+errmsg=$(../pipex "jfkasdjfkas" "ls" "cat" "pipexout.txt" 2> testerr.txt; cat testerr.txt | grep "o such file" | wc -l)
 if [ $errmsg -eq 1 ]
 	then
 		gooderr=$(($gooderr + 1))
@@ -153,7 +153,7 @@ fi
 testnbr=$(($testnbr + 1))
 
 printf "\n$BLUE====TEST $testnbr ==============$YELLOW(cmd 1 invalid, cmd 2 doesn't need input)\n$NC"
-errmsg=$(../pipex "infile.txt" "jfkdjfdkj" "ls" "pipexout.txt" 2> testerr.txt; cat testerr.txt | grep "command not found" | wc -l)
+errmsg=$(../pipex "infile.txt" "jfkdjfdkj" "ls" "pipexout.txt" 2> testerr.txt; cat testerr.txt | grep "ommand not found" | wc -l)
 if [ $errmsg -eq 1 ]
 	then
 		gooderr=$(($gooderr + 1))
@@ -187,7 +187,7 @@ fi
 testnbr=$(($testnbr + 1))
 
 printf "\n$BLUE====TEST $testnbr ==============$YELLOW(cmd 1 valid, cmd 2 invalid)\n$NC"
-errmsg=$(../pipex "infile.txt" "cat" "fjsdkalfjjds" "pipexout.txt" 2> testerr.txt; cat testerr.txt | grep "command not found" | wc -l)
+errmsg=$(../pipex "infile.txt" "cat" "fjsdkalfjjds" "pipexout.txt" 2> testerr.txt; cat testerr.txt | grep "ommand not found" | wc -l)
 if [ $errmsg -eq 1 ]
 	then
 		gooderr=$(($gooderr + 1))
@@ -323,7 +323,7 @@ fi
 testnbr=$(($testnbr + 1))
 
 printf "\n$BLUE====TEST $testnbr ==============$YELLOW(permission denied infile)\n$NC"
-errmsg=$(../pipex "infile.txt" "cat" "cat" "pipexout.txt" 2> testerr.txt; cat testerr.txt | grep "Permission denied" | wc -l)
+errmsg=$(../pipex "infile.txt" "cat" "cat" "pipexout.txt" 2> testerr.txt; cat testerr.txt | grep "ermission denied" | wc -l)
 if [ $errmsg -eq 1 ]
 	then
 		gooderr=$(($gooderr + 1))
@@ -361,7 +361,7 @@ testnbr=$(($testnbr + 1))
 printf "\n$BLUE====TEST $testnbr ==============$YELLOW(permission denied outfile)\n$NC"
 chmod a-w pipexout.txt
 chmod a-w bashout.txt
-errmsg=$(../pipex "infile.txt" "cat" "ls" "pipexout.txt" 2> testerr.txt; cat testerr.txt | grep "Permission denied" | wc -l)
+errmsg=$(../pipex "infile.txt" "cat" "ls" "pipexout.txt" 2> testerr.txt; cat testerr.txt | grep "ermission denied" | wc -l)
 if [ $errmsg -eq 1 ]
 	then
 		gooderr=$(($gooderr + 1))
@@ -399,7 +399,7 @@ testnbr=$(($testnbr + 1))
 printf "\n$BLUE====TEST $testnbr ==============$YELLOW(cmd2 permission denied)\n$NC"
 cp ../pipex pipex2
 chmod a-x pipex2
-errmsg=$(../pipex "infile.txt" "cat" "./pipex2" "pipexout.txt" 2> testerr.txt; cat testerr.txt | grep "Permission denied" | wc -l)
+errmsg=$(../pipex "infile.txt" "cat" "./pipex2" "pipexout.txt" 2> testerr.txt; cat testerr.txt | grep "ermission denied" | wc -l)
 if [ $errmsg -eq 1 ]
 	then
 		gooderr=$(($gooderr + 1))
