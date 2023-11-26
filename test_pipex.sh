@@ -323,6 +323,7 @@ fi
 testnbr=$(($testnbr + 1))
 
 printf "\n$BLUE====TEST $testnbr ==============$YELLOW(permission denied infile)\n$NC"
+chmod a-r infile.txt
 errmsg=$(../pipex "infile.txt" "cat" "cat" "pipexout.txt" 2> testerr.txt; cat testerr.txt | grep "ermission denied" | wc -l)
 if [ $errmsg -eq 1 ]
 	then
@@ -332,7 +333,6 @@ if [ $errmsg -eq 1 ]
 		printf "$RED\nShell Output (Errors): KO\n"
 fi
 printf "$PINK\t\t-Pipex Output Error:\n$NC"
-chmod 000 infile.txt
 p_code=$(../pipex "infile.txt" "cat" "cat" "pipexout.txt"; echo $?)
 printf "$PINK\t\t-Real Output Error:\n$NC"
 r_code=$(<infile.txt cat | cat > bashout.txt; echo $?)
