@@ -10,6 +10,12 @@ Just clone the repo **inside** your Pipex directory, move (cd) into the tester r
 2. ```cd 42Pipex-Tester``` (or whatever name you called it)
 3. ```bash test_pipex.sh```
 
+## How does it work
+The tester evaluates 3 categories and compares them to the bash equivalent:
+1. The error message sent (in case there should be an error message)
+2. The content of the output file
+3. The exit code the program exited with
+
 ## Troubleshooting (common mistakes)
 1. **The tester gets stuck on Test 6 (cat cat) and/or on Test 5 (/dev/random), why is that?** \
 You are not closing fds correctly, resulting in pipes still waiting for input
