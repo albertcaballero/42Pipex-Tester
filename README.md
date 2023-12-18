@@ -17,7 +17,7 @@ The tester evaluates 3 categories and compares them to the bash equivalent:
 3. The exit code the program exited with
 
 ## Troubleshooting (common mistakes)
-1. **The tester gets stuck on Test 6 (cat cat) and/or on Test 5 (/dev/random), why is that?** \
+1. **The tester gets stuck on Test 4 (cat cat) and/or on Test 3 (/dev/random), why is that?** \
 You are not closing fds correctly, resulting in pipes still waiting for input
 
 2. **My error messages are appearing on the output file** \
